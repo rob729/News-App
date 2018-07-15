@@ -1,46 +1,80 @@
 package com.example.robin.news;
 
+import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.PrimaryKey;
+
+@Entity(tableName = "news_table")
 public class News {
 
+    @PrimaryKey(autoGenerate = true)
+    int id;
 
-        String author, title, desc, url, imageUrl, date;
-        Source source;
+    //String author;
+    String title;
+    String desc;
+    String url;
+    String imageUrl;
+    //String date;
+    //Source source;
 
-        public News (String author, String title, String desc, String url, String imageUrl, String date, Source source) {
-            this.author = author;
-            this.title = title;
-            this.desc = desc;
-            this.url = url;
-            this.imageUrl = imageUrl;
-            this.date = date;
-            this.source = source;
-        }
+    public News( String title, String desc, String url, String imageUrl) {
+        this.title = title;
+        this.desc = desc;
+        this.url = url;
+        this.imageUrl = imageUrl;
+        //this.source = source;
+    }
 
-        public String getAuthor() {
-            return author;
-        }
 
-        public String getTitle() {
-            return title;
-        }
+    public void setTitle(String title) {
+        this.title = title;
+    }
 
-        public String getDesc() {
-            return desc;
-        }
+    public void setDesc(String desc) {
+        this.desc = desc;
+    }
 
-        public String getUrl() {
-            return url;
-        }
+    public void setUrl(String url) {
+        this.url = url;
+    }
 
-        public String getImageUrl() {
-            return imageUrl;
-        }
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
 
-        public String getDate() {
-            return date;
-        }
 
-        public Source getSource() {
-            return source;
-        }
+//    public void setSource(Source source) {
+//        this.source = source;
+//    }
+
+
+
+    public String getTitle() {
+        return title;
+    }
+
+    public String getDesc() {
+        return desc;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+
+//    public Source getSource() {
+//        return source;
+//    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 }

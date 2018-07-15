@@ -1,10 +1,13 @@
 package com.example.robin.news;
 
+import android.content.Context;
+import android.net.ConnectivityManager;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -21,6 +24,7 @@ public class MainActivity extends AppCompatActivity {
 
     RecyclerView rv;
     ArrayList<News> newsArrayList;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,17 +32,24 @@ public class MainActivity extends AppCompatActivity {
         rv = findViewById(R.id.rv);
         rv.setLayoutManager(new LinearLayoutManager(getBaseContext()));
 
+        if(isNetworkConnected()){
+            NewsApplication.getDb().clearAllTables();
+            MyNetworkTask myNetworkTask = new MyNetworkTask();
+            myNetworkTask.execute("https://newsapi.org/v2/top-headlines?sources=techcrunch&apiKey=4663b6001744472eaac1f5aa16076a7a");
 
-        MyNetworkTask myNetworkTask = new MyNetworkTask();
-        myNetworkTask.execute("https://newsapi.org/v2/top-headlines?sources=techcrunch&apiKey=4663b6001744472eaac1f5aa16076a7a");
+        }
+        else{
+            newsArrayList = (ArrayList<News>) NewsApplication.getDb().getNewsDao().getAllNews();
+            NewsAdapter newsAdapter = new NewsAdapter(MainActivity.this, newsArrayList);
+            rv.setAdapter(newsAdapter);
 
-
+        }
 
 
 
     }
 
-    public Result convertJsonToResponse(String json){
+    public Result convertJsonToResponse(String json) {
 
         try {
             JSONObject jsonObject = new JSONObject(json);
@@ -51,21 +62,23 @@ public class MainActivity extends AppCompatActivity {
             newsArrayList = new ArrayList<>();
             for (int i = 0; i < jsonArray.length(); i++) {
                 JSONObject articleObject = jsonArray.getJSONObject(i);
-                String author = articleObject.getString("author");
+                //String author = articleObject.getString("author");
                 String title = articleObject.getString("title");
                 String desc = articleObject.getString("description");
                 String url = articleObject.getString("url");
                 String imageUrl = articleObject.getString("urlToImage");
-                String published = articleObject.getString("publishedAt");
+                //String published = articleObject.getString("publishedAt");
 
-                JSONObject source = articleObject.getJSONObject("source");
-                String id = source.getString("id");
-                String name = source.getString("name");
-                Source sourceJava = new Source(id, name);
+//                JSONObject source = articleObject.getJSONObject("source");
+//                String id = source.getString("id");
+//                String name = source.getString("name");
+//                Source sourceJava = new Source(id, name);
 
-                News news = new News(author, title, desc, url, imageUrl, published, sourceJava);
+                News news = new News(title, desc, url, imageUrl);
 
                 newsArrayList.add(news);
+                NewsApplication.getDb().getNewsDao().insertNews(news);
+
             }
 
             Result result = new Result(status, totalResults, newsArrayList);
@@ -117,16 +130,23 @@ public class MainActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
-           // textView.setText(s);
+            // textView.setText(s);
             Result result = convertJsonToResponse(s);
 
             ArrayList<News> newsArrayList1 = result.getNews();
-            NewsAdapter newsAdapter= new NewsAdapter(MainActivity.this,newsArrayList1);
+            NewsAdapter newsAdapter = new NewsAdapter(MainActivity.this, newsArrayList1);
             rv.setAdapter(newsAdapter);
 
 //
 //            result.getStatus();
 //            result.getTotalResults();
         }
+
+    }
+
+    private boolean isNetworkConnected() {
+        ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+
+        return cm != null && cm.getActiveNetworkInfo() != null;
     }
 }
