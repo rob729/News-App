@@ -10,6 +10,8 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 
+import com.cooltechworks.views.shimmer.ShimmerRecyclerView;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -26,11 +28,14 @@ public class MainActivity extends AppCompatActivity {
     RecyclerView rv;
     ArrayList<News> newsArrayList;
     SwipeRefreshLayout pullToRefresh;
+    ShimmerRecyclerView shimmerRecycler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        shimmerRecycler = findViewById(R.id.shimmer_recycler_view);
+        shimmerRecycler.showShimmerAdapter();
         rv = findViewById(R.id.rv);
         pullToRefresh = findViewById(R.id.pullToRefresh);
         rv.setLayoutManager(new LinearLayoutManager(getBaseContext()));
@@ -151,6 +156,7 @@ public class MainActivity extends AppCompatActivity {
             ArrayList<News> newsArrayList1 = result.getNews();
             NewsAdapter newsAdapter = new NewsAdapter(MainActivity.this, newsArrayList1);
             rv.setAdapter(newsAdapter);
+            shimmerRecycler.hideShimmerAdapter();
 
 //
 //            result.getStatus();
