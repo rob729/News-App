@@ -3,6 +3,7 @@ package com.example.robin.news;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.os.AsyncTask;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -24,18 +25,32 @@ public class MainActivity extends AppCompatActivity {
 
     RecyclerView rv;
     ArrayList<News> newsArrayList;
+    SwipeRefreshLayout pullToRefresh;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         rv = findViewById(R.id.rv);
+        pullToRefresh = findViewById(R.id.pullToRefresh);
         rv.setLayoutManager(new LinearLayoutManager(getBaseContext()));
 
         if(isNetworkConnected()){
             NewsApplication.getDb().clearAllTables();
             MyNetworkTask myNetworkTask = new MyNetworkTask();
             myNetworkTask.execute("https://newsapi.org/v2/top-headlines?sources=techcrunch&apiKey=4663b6001744472eaac1f5aa16076a7a");
+
+
+
+            pullToRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+                @Override
+                public void onRefresh() {
+                    NewsApplication.getDb().clearAllTables();
+                    MyNetworkTask myNetworkTask = new MyNetworkTask();
+                    myNetworkTask.execute("https://newsapi.org/v2/top-headlines?sources=techcrunch&apiKey=4663b6001744472eaac1f5aa16076a7a");
+                    pullToRefresh.setRefreshing(false);
+                }
+            });
 
         }
         else{
