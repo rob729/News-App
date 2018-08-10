@@ -59,6 +59,7 @@ public class MainActivity extends AppCompatActivity {
 
         }
         else{
+            shimmerRecycler.hideShimmerAdapter();
             newsArrayList = (ArrayList<News>) NewsApplication.getDb().getNewsDao().getAllNews();
             NewsAdapter newsAdapter = new NewsAdapter(MainActivity.this, newsArrayList);
             rv.setAdapter(newsAdapter);
