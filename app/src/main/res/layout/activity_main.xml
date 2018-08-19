@@ -20,17 +20,25 @@
     </android.support.v4.widget.SwipeRefreshLayout>
 
 
-    <com.cooltechworks.views.shimmer.ShimmerRecyclerView
-        xmlns:app="http://schemas.android.com/apk/res-auto"
+    <io.supercharge.shimmerlayout.ShimmerLayout
         android:id="@+id/shimmer_recycler_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_alignBottom="@id/pullToRefresh"
         android:layout_alignTop="@id/pullToRefresh"
-        app:shimmer_demo_child_count="8"
-        app:shimmer_demo_layout="@layout/item_row"
-        app:shimmer_demo_layout_manager_type="linear_vertical"
-        app:shimmer_demo_angle="20"
-        />
+        android:layout_gravity="center_horizontal"
+        app:shimmer_animation_duration="1200">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:id="@+id/ll2">
+            <include layout="@layout/item_row"/>
+            <include layout="@layout/item_row"/>
+            <include layout="@layout/item_row"/>
+            <include layout="@layout/item_row"/>
+            <include layout="@layout/item_row"/>
 
+        </LinearLayout>
+    </io.supercharge.shimmerlayout.ShimmerLayout>
 </RelativeLayout>

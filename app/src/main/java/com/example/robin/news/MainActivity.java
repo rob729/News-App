@@ -12,8 +12,10 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.LinearLayout;
 
-import com.cooltechworks.views.shimmer.ShimmerRecyclerView;
+
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -26,20 +28,24 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+import io.supercharge.shimmerlayout.ShimmerLayout;
+
 public class MainActivity extends AppCompatActivity {
 
     RecyclerView rv;
     ArrayList<News> newsArrayList;
     SwipeRefreshLayout pullToRefresh;
-    ShimmerRecyclerView shimmerRecycler;
+    ShimmerLayout shimmerText;
+    LinearLayout ll2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        shimmerRecycler = findViewById(R.id.shimmer_recycler_view);
-        shimmerRecycler.showShimmerAdapter();
+        shimmerText = findViewById(R.id.shimmer_recycler_view);
+        shimmerText.startShimmerAnimation();
         rv = findViewById(R.id.rv);
+        ll2 = findViewById(R.id.ll2);
         pullToRefresh = findViewById(R.id.pullToRefresh);
         rv.setLayoutManager(new LinearLayoutManager(getBaseContext()));
 
@@ -62,7 +68,8 @@ public class MainActivity extends AppCompatActivity {
 
         }
         else{
-            shimmerRecycler.hideShimmerAdapter();
+            shimmerText.stopShimmerAnimation();
+            ll2.setVisibility(View.GONE);
             newsArrayList = (ArrayList<News>) NewsApplication.getDb().getNewsDao().getAllNews();
             NewsAdapter newsAdapter = new NewsAdapter(MainActivity.this, newsArrayList);
             rv.setAdapter(newsAdapter);
@@ -159,7 +166,8 @@ public class MainActivity extends AppCompatActivity {
             ArrayList<News> newsArrayList1 = result.getNews();
             NewsAdapter newsAdapter = new NewsAdapter(MainActivity.this, newsArrayList1);
             rv.setAdapter(newsAdapter);
-            shimmerRecycler.hideShimmerAdapter();
+            shimmerText.stopShimmerAnimation();
+            ll2.setVisibility(View.GONE);
 
 //
 //            result.getStatus();
