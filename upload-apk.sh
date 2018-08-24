@@ -7,8 +7,8 @@
   #go to home and git setup  
 
   cd $ HOME 
-  git config --global user.email "useremail@domain.com" 
-  git config --global user.name "Your Name" 
+  git config --global user.email "rs729028@gmail.com" 
+  git config --global user.name "rob729" 
   # Clone the repository in the folder buildApk
 
   git clone --quiet --branch master = https: // user-name: $GITHUB_API_KEY@github.com/user-name/repo-name master> / dev / null 
