@@ -1,4 +1,6 @@
 # News 
+[![Platform](https://img.shields.io/badge/platform-android-blue.svg)](http://developer.android.com/index.html)
+[![API](https://img.shields.io/badge/API-19%2B-blue.svg?style=flat)](https://android-arsenal.com/api?level=19)
 #### News is an Android App which shows the latest news of the Tech world.
 ##### The App shows the latest news in the form of a list and clicking on a particular event will open the web browser to show more information about the event.
 
