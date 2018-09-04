@@ -1,4 +1,5 @@
 # News 
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/ea57b69bbc2b4d1c9fb055ceb3dc8e0a)](https://app.codacy.com/app/rob729/News-App?utm_source=github.com&utm_medium=referral&utm_content=rob729/News-App&utm_campaign=Badge_Grade_Dashboard)
 [![Platform](https://img.shields.io/badge/platform-android-blue.svg)](http://developer.android.com/index.html)
 [![API](https://img.shields.io/badge/API-19%2B-blue.svg?style=flat)](https://android-arsenal.com/api?level=19)
 #### News is an Android App which shows the latest news of the Tech world.
