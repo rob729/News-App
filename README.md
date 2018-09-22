@@ -5,6 +5,6 @@
 #### This is an android app which shows the latest news of the Tech world.
 ##### The App shows the latest news in the form of a list and clicking on a particular event will open the web browser to show more information about the event.
 
-![](https://raw.githubusercontent.com/rob729/images/master/news_src.png?token=Ad5e5TGPWMF3SD2TrdT7QowQazwTeJkJks5bpHiswA%3D%3D)
+![](https://raw.githubusercontent.com/rob729/News-App/master/news_src.png)
 ##### Download[ .apk](https://drive.google.com/open?id=11rKtPZasWRInsvwodf8euOpFMl4wcIQ7)
 ###### Information Source: https://newsapi.org
